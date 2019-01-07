@@ -60,6 +60,14 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
         return pc
     }
     
+    private func setupLocalView(){
+        localRenderView = RTCEAGLVideoView()
+        localRenderView!.delegate = self
+        localView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenSizeUtil.width()/3, height: ScreenSizeUtil.height()/3))
+        localRenderView!.frame = localView.frame
+        localView.addSubview(localRenderView!)
+    }
+    
     private func setupLocalTracks(){
         self.peerConnection.add(createAudioTrack(), streamIds: ["stream0"])
         self.localVideoTrack = createVideoTrack()
@@ -119,14 +127,6 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
         capturer.startCapture(with: targetDevice!,
                               format: targetFormat!,
                               fps: videoFps)
-    }
-    
-    private func setupLocalView(){
-        localRenderView = RTCEAGLVideoView()
-        localRenderView!.delegate = self
-        localView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenSizeUtil.width()/3, height: ScreenSizeUtil.height()/3))
-        localRenderView!.frame = localView.frame
-        localView.addSubview(localRenderView!)
     }
     
 }

@@ -6,6 +6,7 @@ target 'SimpleWebRTC' do
   use_frameworks!
 
   # Pods for SimpleWebRTC
+  pod 'Starscream', '~> 3.0.2'
 
   target 'SimpleWebRTCTests' do
     inherit! :search_paths
