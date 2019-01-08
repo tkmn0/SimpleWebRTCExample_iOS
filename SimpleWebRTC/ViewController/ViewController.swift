@@ -10,7 +10,7 @@ import UIKit
 import Starscream
 import WebRTC
 
-class ViewController: UIViewController, WebSocketDelegate {
+class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate {
     
     var webRTCClient: WebRTCClient!
     var socket: WebSocket!
@@ -25,6 +25,7 @@ class ViewController: UIViewController, WebSocketDelegate {
         super.viewDidLoad()
         
         webRTCClient = WebRTCClient()
+        webRTCClient.delegate = self
         webRTCClient.setup()
         
         socket = WebSocket(url: URL(string: "ws://" + ipAddress + ":8080/")!)
@@ -40,7 +41,13 @@ class ViewController: UIViewController, WebSocketDelegate {
         remoteVideoViewContainter.backgroundColor = .gray
         self.view.addSubview(remoteVideoViewContainter)
         
+        let remoteVideoView = webRTCClient.remoteVideoView()
+        webRTCClient.setupRemoteViewFrame(frame: CGRect(x: 0, y: 0, width: ScreenSizeUtil.width()*0.7, height: ScreenSizeUtil.height()*0.7))
+        remoteVideoView.center = remoteVideoViewContainter.center
+        remoteVideoViewContainter.addSubview(remoteVideoView)
+        
         let localVideoView = webRTCClient.localVideoView()
+        webRTCClient.setupLocalViewFrame(frame: CGRect(x: 0, y: 0, width: ScreenSizeUtil.width()/3, height: ScreenSizeUtil.height()/3))
         localVideoView.center.y = self.view.center.y
         self.view.addSubview(localVideoView)
         
@@ -86,13 +93,51 @@ class ViewController: UIViewController, WebSocketDelegate {
     // MARK: - UI Events
     @objc func callButtonTapped(_ sender: UIButton){
         webRTCClient.makeOffer(onSuccess: { (offerSDP: RTCSessionDescription) -> Void in
-            print(offerSDP)
             
+            self.sendSDP(sessionDescription: offerSDP)
         })
     }
     
     @objc func hungupButtonTapped(_ sender: UIButton){
         
+    }
+    
+    // MARK: - WebRTC Signaling
+    private func sendSDP(sessionDescription: RTCSessionDescription){
+        var type = ""
+        if sessionDescription.type == .offer {
+            type = "offer"
+        }else if sessionDescription.type == .answer {
+            type = "answer"
+        }
+        
+        let sdp = SDP.init(sdp: sessionDescription.sdp)
+        let signalingMessage = SignalingMessage.init(type: type, sessionDescription: sdp, candidate: nil)
+        do {
+            let data = try JSONEncoder().encode(signalingMessage)
+            let message = String(data: data, encoding: String.Encoding.utf8)!
+            
+            if self.socket.isConnected {
+                self.socket.write(string: message)
+            }
+        }catch{
+            print(error)
+        }
+    }
+    
+    private func sendCandidate(iceCandidate: RTCIceCandidate){
+        let candidate = Candidate.init(sdp: iceCandidate.sdp, sdpMLineIndex: iceCandidate.sdpMLineIndex, sdpMid: iceCandidate.sdpMid!)
+        let signalingMessage = SignalingMessage.init(type: "candidate", sessionDescription: nil, candidate: candidate)
+        do {
+            let data = try JSONEncoder().encode(signalingMessage)
+            let message = String(data: data, encoding: String.Encoding.utf8)!
+            
+            if self.socket.isConnected {
+                self.socket.write(string: message)
+            }
+        }catch{
+            print(error)
+        }
     }
     
 }
@@ -112,9 +157,33 @@ extension ViewController {
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         
+        do{
+            let signalingMessage = try JSONDecoder().decode(SignalingMessage.self, from: text.data(using: .utf8)!)
+            
+            if signalingMessage.type == "offer" {
+                webRTCClient.recieveOffer(offerSDP: RTCSessionDescription(type: .offer, sdp: (signalingMessage.sessionDescription?.sdp)!), onCreateAnswer: {(answerSDP: RTCSessionDescription) -> Void in
+                    self.sendSDP(sessionDescription: answerSDP)
+                })
+            }else if signalingMessage.type == "answer" {
+                webRTCClient.recieveAnswer(answerSDP: RTCSessionDescription(type: .answer, sdp: (signalingMessage.sessionDescription?.sdp)!))
+            }else if signalingMessage.type == "candidate" {
+                let candidate = signalingMessage.candidate!
+                webRTCClient.recieveCandidate(candidate: RTCIceCandidate(sdp: candidate.sdp, sdpMLineIndex: candidate.sdpMLineIndex, sdpMid: candidate.sdpMid))
+            }
+        }catch{
+            print(error)
+        }
+        
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         
+    }
+}
+
+// MARK: - WebRTCClient Delegate
+extension ViewController {
+    func didGenerateCandidate(iceCandidate: RTCIceCandidate) {
+        self.sendCandidate(iceCandidate: iceCandidate)
     }
 }
