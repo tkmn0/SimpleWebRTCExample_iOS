@@ -49,6 +49,32 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
         self.localVideoTrack?.add(self.localRenderView!)
     }
     
+    // MARK: signaling
+    func makeOffer(onSuccess: @escaping (RTCSessionDescription) -> Void) {
+        
+        self.peerConnection.offer(for: RTCMediaConstraints.init(mandatoryConstraints: nil, optionalConstraints: nil)) { (sdp, err) in
+            if let error = err {
+                print("error with make offer")
+                print(error)
+                return
+            }
+            
+            if let offerSDP = sdp {
+                print("make offer, created local sdp")
+                self.peerConnection.setLocalDescription(offerSDP, completionHandler: { (err) in
+                    if let error = err {
+                        print("error with set local offer sdp")
+                        print(error)
+                        return
+                    }
+                    print("succeed to set local offer SDP")
+                    onSuccess(offerSDP)
+                })
+            }
+
+        }
+    }
+    
     // MARK: - private functions
     private func setupPeerConnection() -> RTCPeerConnection{
         let rtcConf = RTCConfiguration()

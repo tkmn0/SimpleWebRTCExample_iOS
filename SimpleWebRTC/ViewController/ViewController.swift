@@ -8,6 +8,7 @@
 
 import UIKit
 import Starscream
+import WebRTC
 
 class ViewController: UIViewController, WebSocketDelegate {
     
@@ -62,6 +63,7 @@ class ViewController: UIViewController, WebSocketDelegate {
         callButton.center.y = webRTCStatusLabel.bottom + (ScreenSizeUtil.height() - webRTCStatusLabel.bottom)/2
         callButton.setTitle("Call", for: .normal)
         callButton.titleLabel?.font = UIFont.systemFont(ofSize: 23)
+        callButton.addTarget(self, action: #selector(self.callButtonTapped(_:)), for: .touchUpInside)
         self.view.addSubview(callButton)
         
         let hungupButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight))
@@ -72,6 +74,7 @@ class ViewController: UIViewController, WebSocketDelegate {
         hungupButton.center.y = callButton.center.y
         hungupButton.setTitle("Hung up" , for: .normal)
         hungupButton.titleLabel?.font = UIFont.systemFont(ofSize: 22)
+        hungupButton.addTarget(self, action: #selector(self.hungupButtonTapped(_:)), for: .touchUpInside)
         self.view.addSubview(hungupButton)
     }
     
@@ -80,11 +83,23 @@ class ViewController: UIViewController, WebSocketDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - UI Events
+    @objc func callButtonTapped(_ sender: UIButton){
+        webRTCClient.makeOffer(onSuccess: { (offerSDP: RTCSessionDescription) -> Void in
+            print(offerSDP)
+            
+        })
+    }
+    
+    @objc func hungupButtonTapped(_ sender: UIButton){
+        
+    }
+    
 }
 
 // MARK: - WebSocket Delegate
 extension ViewController {
-
+    
     func websocketDidConnect(socket: WebSocketClient) {
         print("-- websocket did connect --")
         wsStatusLabel.text = wsStatusMessageBase + "connected"
