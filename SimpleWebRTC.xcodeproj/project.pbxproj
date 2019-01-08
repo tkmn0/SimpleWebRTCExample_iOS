@@ -10,6 +10,7 @@
 		63BB1CC6E02B6443DA94C935 /* Pods_SimpleWebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFABE961561EF9B2240A098 /* Pods_SimpleWebRTC.framework */; };
 		AF15C0AC21E3FC3E005B4ED6 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF15C0AA21E3FC39005B4ED6 /* WebRTC.framework */; };
 		AF15C0AD21E3FC3E005B4ED6 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AF15C0AA21E3FC39005B4ED6 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF15C0B221E422D9005B4ED6 /* UIViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */; };
 		AF711AA521DFAD6C005CA4FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711AA421DFAD6C005CA4FA /* AppDelegate.swift */; };
 		AF711AA721DFAD6C005CA4FA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711AA621DFAD6C005CA4FA /* ViewController.swift */; };
 		AF711AAA21DFAD6C005CA4FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF711AA821DFAD6C005CA4FA /* Main.storyboard */; };
@@ -64,6 +65,7 @@
 		9BFABE961561EF9B2240A098 /* Pods_SimpleWebRTC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWebRTC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF15C0A821E3FC23005B4ED6 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = ../webrtc_build/src/out/ios/WebRTC.framework; sourceTree = "<group>"; };
 		AF15C0AA21E3FC39005B4ED6 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
+		AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtention.swift; sourceTree = "<group>"; };
 		AF711AA121DFAD6C005CA4FA /* SimpleWebRTC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleWebRTC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF711AA421DFAD6C005CA4FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF711AA621DFAD6C005CA4FA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 		AF15C0AE21E41A58005B4ED6 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
+				AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF711AA721DFAD6C005CA4FA /* ViewController.swift in Sources */,
+				AF15C0B221E422D9005B4ED6 /* UIViewExtention.swift in Sources */,
 				AF711ADD21E14DDC005CA4FA /* ScreenSizeUtil.swift in Sources */,
 				AF711AA521DFAD6C005CA4FA /* AppDelegate.swift in Sources */,
 				AF711ADA21E1454E005CA4FA /* WebRTCClient.swift in Sources */,
