@@ -277,6 +277,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
         self.isConnected = true
         
         DispatchQueue.main.async {
+            self.remoteRenderView?.isHidden = false
             self.delegate?.webRTCDidConnected()
         }
     }
@@ -288,6 +289,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
             print("--- on dis connected ---")
             self.peerConnection!.close()
             self.peerConnection = nil
+            self.remoteRenderView?.isHidden = true
             self.delegate?.webRTCDidDisconnected()
         }
     }
