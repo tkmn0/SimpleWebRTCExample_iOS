@@ -75,8 +75,7 @@ gn gen out/ios_32 --args='target_os="ios" target_cpu="arm" is_debug=false ios_en
 
 for simulator
 ```
-gn gen out/ios_sim --args='target_os="ios" target_cpu="x64"
-is_debug=false ios_enable_code_signing=false'
+gn gen out/ios_sim --args='target_os="ios" target_cpu="x64" is_debug=false ios_enable_code_signing=false'
 ``` 
 
 #### Compile with ninja
