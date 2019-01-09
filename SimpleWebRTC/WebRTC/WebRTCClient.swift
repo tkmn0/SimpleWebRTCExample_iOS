@@ -95,7 +95,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
     // MARK: Signaling Event
     func receiveOffer(offerSDP: RTCSessionDescription, onCreateAnswer: @escaping (RTCSessionDescription) -> Void){
         if(self.peerConnection == nil){
-            print("offer recieved, create peerconnection")
+            print("offer received, create peerconnection")
             self.peerConnection = setupPeerConnection()
             self.peerConnection!.delegate = self
             self.peerConnection!.add(localAudioTrack, streamIds: ["stream-0"])
@@ -125,7 +125,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
         }
     }
     
-    func recieveCandidate(candidate: RTCIceCandidate){
+    func receiveCandidate(candidate: RTCIceCandidate){
         self.peerConnection!.add(candidate)
     }
     
