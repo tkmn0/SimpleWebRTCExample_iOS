@@ -19,9 +19,10 @@ protocol WebRTCClientDelegate {
 class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
     
     private var peerConnectionFactory: RTCPeerConnectionFactory!
-    private var peerConnection: RTCPeerConnection!
+    private var peerConnection: RTCPeerConnection?
     private var videoCapturer: RTCVideoCapturer!
     private var localVideoTrack: RTCVideoTrack!
+    private var localAudioTrack: RTCAudioTrack!
     private var localRenderView: RTCEAGLVideoView?
     private var localView: UIView!
     private var remoteRenderView: RTCEAGLVideoView?
@@ -49,14 +50,13 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
         self.peerConnection = nil
     }
     
-    // MARK: - public functions
+    // MARK: - Public functions
     func setup(){
         print("set up")
         let videoEncoderFactory = RTCDefaultVideoEncoderFactory()
         let videoDecoderFactory = RTCDefaultVideoDecoderFactory()
         self.peerConnectionFactory = RTCPeerConnectionFactory(encoderFactory: videoEncoderFactory, decoderFactory: videoDecoderFactory)
         
-        self.peerConnection = setupPeerConnection()
         setupView()
         setupLocalTracks()
         
@@ -75,34 +75,35 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
         remoteRenderView?.frame = remoteView.frame
     }
     
-    // MARK: signaling
-    func makeOffer(onSuccess: @escaping (RTCSessionDescription) -> Void) {
+    // MARK: Connect
+    func connect(onSuccess: @escaping (RTCSessionDescription) -> Void){
+        self.peerConnection = setupPeerConnection()
+        self.peerConnection!.delegate = self
+        self.peerConnection!.add(localAudioTrack, streamIds: ["stream0"])
+        self.peerConnection!.add(localVideoTrack, streamIds: ["stream0"])
         
-        self.peerConnection.offer(for: RTCMediaConstraints.init(mandatoryConstraints: nil, optionalConstraints: nil)) { (sdp, err) in
-            if let error = err {
-                print("error with make offer")
-                print(error)
-                return
-            }
-            
-            if let offerSDP = sdp {
-                print("make offer, created local sdp")
-                self.peerConnection.setLocalDescription(offerSDP, completionHandler: { (err) in
-                    if let error = err {
-                        print("error with set local offer sdp")
-                        print(error)
-                        return
-                    }
-                    print("succeed to set local offer SDP")
-                    onSuccess(offerSDP)
-                })
-            }
-            
+        makeOffer(onSuccess: onSuccess)
+    }
+    
+    // MARK: HangUp
+    func disconnect(){
+        if self.peerConnection != nil{
+            self.peerConnection!.close()
         }
     }
     
-    func recieveOffer(offerSDP: RTCSessionDescription, onCreateAnswer: @escaping (RTCSessionDescription) -> Void){
-        self.peerConnection.setRemoteDescription(offerSDP) { (err) in
+    // MARK: Signaling Event
+    func receiveOffer(offerSDP: RTCSessionDescription, onCreateAnswer: @escaping (RTCSessionDescription) -> Void){
+        if(self.peerConnection == nil){
+            print("offer recieved, create peerconnection")
+            self.peerConnection = setupPeerConnection()
+            self.peerConnection!.delegate = self
+            self.peerConnection!.add(localAudioTrack, streamIds: ["stream-0"])
+            self.peerConnection!.add(localVideoTrack, streamIds: ["stream-0"])
+        }
+        
+        print("set remote description")
+        self.peerConnection!.setRemoteDescription(offerSDP) { (err) in
             if let error = err {
                 print("failed to set remote offer SDP")
                 print(error)
@@ -110,32 +111,12 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
             }
             
             print("succeed to set remote offer SDP")
-            self.peerConnection.answer(for: RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil), completionHandler: { (answerSessionDescription, err) in
-                if let error = err {
-                    print("failed to create local answer SDP")
-                    print(error)
-                    return
-                }
-                
-                print("succeed to create local answer SDP")
-                if let answerSDP = answerSessionDescription{
-                    self.peerConnection.setLocalDescription( answerSDP, completionHandler: { (err) in
-                        if let error = err {
-                            print("failed to set local ansewr SDP")
-                            print(error)
-                            return
-                        }
-                        
-                        print("succeed to set local answer SDP")
-                        onCreateAnswer(answerSDP)
-                    })
-                }
-            })
+            self.makeAnswer(onCreateAnswer: onCreateAnswer)
         }
     }
     
-    func recieveAnswer(answerSDP: RTCSessionDescription){
-        self.peerConnection.setRemoteDescription(answerSDP) { (err) in
+    func receiveAnswer(answerSDP: RTCSessionDescription){
+        self.peerConnection!.setRemoteDescription(answerSDP) { (err) in
             if let error = err {
                 print("failed to set remote answer SDP")
                 print(error)
@@ -145,16 +126,17 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
     }
     
     func recieveCandidate(candidate: RTCIceCandidate){
-        self.peerConnection.add(candidate)
+        self.peerConnection!.add(candidate)
     }
     
-    // MARK: - private functions
+    // MARK: - Private functions
+    // MARK: Setup
     private func setupPeerConnection() -> RTCPeerConnection{
         let rtcConf = RTCConfiguration()
         rtcConf.iceServers = [RTCIceServer(urlStrings: ["stun:stun.l.google.com:19302"])]
         let mediaConstraints = RTCMediaConstraints.init(mandatoryConstraints: nil, optionalConstraints: nil)
         
-        let pc = self.peerConnectionFactory.peerConnection(with: rtcConf, constraints: mediaConstraints, delegate: self)
+        let pc = self.peerConnectionFactory.peerConnection(with: rtcConf, constraints: mediaConstraints, delegate: nil)
         
         return pc
     }
@@ -172,9 +154,8 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
     }
     
     private func setupLocalTracks(){
-        self.peerConnection.add(createAudioTrack(), streamIds: ["stream0"])
         self.localVideoTrack = createVideoTrack()
-        self.peerConnection.add(localVideoTrack, streamIds: ["stream0"])
+        self.localAudioTrack = createAudioTrack()
     }
     
     private func createAudioTrack() -> RTCAudioTrack {
@@ -199,7 +180,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
         return videoTrack
     }
     
-    func startCaptureLocalVideo(cameraPositon: AVCaptureDevice.Position, videoWidth: Int, videoHeight: Int?, videoFps: Int) {
+    private func startCaptureLocalVideo(cameraPositon: AVCaptureDevice.Position, videoWidth: Int, videoHeight: Int?, videoFps: Int) {
         if let capturer = self.videoCapturer as? RTCCameraVideoCapturer {
             var targetDevice: AVCaptureDevice?
             var targetFormat: AVCaptureDevice.Format?
@@ -239,14 +220,82 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
             }else{
                 print("file did not faund")
             }
+        }
+    }
+    
+    // MARK: Signaling Offer/Answer
+    private func makeOffer(onSuccess: @escaping (RTCSessionDescription) -> Void) {
+        self.peerConnection?.offer(for: RTCMediaConstraints.init(mandatoryConstraints: nil, optionalConstraints: nil)) { (sdp, err) in
+            if let error = err {
+                print("error with make offer")
+                print(error)
+                return
+            }
+            
+            if let offerSDP = sdp {
+                print("make offer, created local sdp")
+                self.peerConnection!.setLocalDescription(offerSDP, completionHandler: { (err) in
+                    if let error = err {
+                        print("error with set local offer sdp")
+                        print(error)
+                        return
+                    }
+                    print("succeed to set local offer SDP")
+                    onSuccess(offerSDP)
+                })
+            }
             
         }
     }
     
+    private func makeAnswer(onCreateAnswer: @escaping (RTCSessionDescription) -> Void){
+        self.peerConnection!.answer(for: RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil), completionHandler: { (answerSessionDescription, err) in
+            if let error = err {
+                print("failed to create local answer SDP")
+                print(error)
+                return
+            }
+            
+            print("succeed to create local answer SDP")
+            if let answerSDP = answerSessionDescription{
+                self.peerConnection!.setLocalDescription( answerSDP, completionHandler: { (err) in
+                    if let error = err {
+                        print("failed to set local ansewr SDP")
+                        print(error)
+                        return
+                    }
+                    
+                    print("succeed to set local answer SDP")
+                    onCreateAnswer(answerSDP)
+                })
+            }
+        })
+    }
+    
+    // MARK: Connection Events
+    private func onConnected(){
+        self.isConnected = true
+        
+        DispatchQueue.main.async {
+            self.delegate?.webRTCDidConnected()
+        }
+    }
+    
+    private func onDisConnected(){
+        self.isConnected = false
+        
+        DispatchQueue.main.async {
+            print("--- on dis connected ---")
+            self.peerConnection!.close()
+            self.peerConnection = nil
+            self.delegate?.webRTCDidDisconnected()
+        }
+    }
 }
 
-// MARK: PeerConnection Delegeate
+
 extension WebRTCClient {
+    // MARK: PeerConnection Delegeates
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         var state = ""
         if stateChanged == .stable{
@@ -265,18 +314,12 @@ extension WebRTCClient {
         switch newState {
         case .connected, .completed:
             if !self.isConnected {
-                DispatchQueue.main.async {
-                    self.delegate?.webRTCDidConnected()
-                }
+                self.onConnected()
             }
-            self.isConnected = true
         default:
             if self.isConnected{
-                DispatchQueue.main.async {
-                    self.delegate?.webRTCDidDisconnected()
-                }
+                self.onDisConnected()
             }
-            self.isConnected = false
         }
         
         DispatchQueue.main.async {
@@ -298,7 +341,9 @@ extension WebRTCClient {
         self.delegate?.didGenerateCandidate(iceCandidate: candidate)
     }
     
-    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {}
+    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
+        print("--- did remove stream ---")
+    }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {}
     
@@ -309,12 +354,11 @@ extension WebRTCClient {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {}
 }
 
-// MARK: RTCVideoView Delegate
+
 extension WebRTCClient{
-    
+    // MARK: RTCVideoView Delegate
     func videoView(_ videoView: RTCVideoRenderer, didChangeVideoSize size: CGSize) {
         let isLandScape = size.width < size.height
-        
         var renderView: RTCEAGLVideoView?
         var parentView: UIView?
         if videoView.isEqual(localRenderView){
@@ -324,7 +368,7 @@ extension WebRTCClient{
         }
         
         if videoView.isEqual(remoteRenderView!){
-            print("remote video size changed")
+            print("remote video size changed to: ", size)
             renderView = remoteRenderView
             parentView = remoteView
         }

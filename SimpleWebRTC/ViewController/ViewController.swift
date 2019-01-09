@@ -73,16 +73,16 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
         callButton.addTarget(self, action: #selector(self.callButtonTapped(_:)), for: .touchUpInside)
         self.view.addSubview(callButton)
         
-        let hungupButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight))
-        hungupButton.backgroundColor = .red
-        hungupButton.layer.cornerRadius = buttonRadius
-        hungupButton.layer.masksToBounds = true
-        hungupButton.center.x = ScreenSizeUtil.width()/4 * 3
-        hungupButton.center.y = callButton.center.y
-        hungupButton.setTitle("Hung up" , for: .normal)
-        hungupButton.titleLabel?.font = UIFont.systemFont(ofSize: 22)
-        hungupButton.addTarget(self, action: #selector(self.hungupButtonTapped(_:)), for: .touchUpInside)
-        self.view.addSubview(hungupButton)
+        let hangupButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight))
+        hangupButton.backgroundColor = .red
+        hangupButton.layer.cornerRadius = buttonRadius
+        hangupButton.layer.masksToBounds = true
+        hangupButton.center.x = ScreenSizeUtil.width()/4 * 3
+        hangupButton.center.y = callButton.center.y
+        hangupButton.setTitle("hang up" , for: .normal)
+        hangupButton.titleLabel?.font = UIFont.systemFont(ofSize: 22)
+        hangupButton.addTarget(self, action: #selector(self.hangupButtonTapped(_:)), for: .touchUpInside)
+        self.view.addSubview(hangupButton)
     }
     
     override func didReceiveMemoryWarning() {
@@ -92,14 +92,13 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
     
     // MARK: - UI Events
     @objc func callButtonTapped(_ sender: UIButton){
-        webRTCClient.makeOffer(onSuccess: { (offerSDP: RTCSessionDescription) -> Void in
-            
+        webRTCClient.connect(onSuccess: { (offerSDP: RTCSessionDescription) -> Void in
             self.sendSDP(sessionDescription: offerSDP)
         })
     }
     
-    @objc func hungupButtonTapped(_ sender: UIButton){
-        
+    @objc func hangupButtonTapped(_ sender: UIButton){
+        webRTCClient.disconnect()
     }
     
     // MARK: - WebRTC Signaling
@@ -168,11 +167,11 @@ extension ViewController {
             let signalingMessage = try JSONDecoder().decode(SignalingMessage.self, from: text.data(using: .utf8)!)
             
             if signalingMessage.type == "offer" {
-                webRTCClient.recieveOffer(offerSDP: RTCSessionDescription(type: .offer, sdp: (signalingMessage.sessionDescription?.sdp)!), onCreateAnswer: {(answerSDP: RTCSessionDescription) -> Void in
+                webRTCClient.receiveOffer(offerSDP: RTCSessionDescription(type: .offer, sdp: (signalingMessage.sessionDescription?.sdp)!), onCreateAnswer: {(answerSDP: RTCSessionDescription) -> Void in
                     self.sendSDP(sessionDescription: answerSDP)
                 })
             }else if signalingMessage.type == "answer" {
-                webRTCClient.recieveAnswer(answerSDP: RTCSessionDescription(type: .answer, sdp: (signalingMessage.sessionDescription?.sdp)!))
+                webRTCClient.receiveAnswer(answerSDP: RTCSessionDescription(type: .answer, sdp: (signalingMessage.sessionDescription?.sdp)!))
             }else if signalingMessage.type == "candidate" {
                 let candidate = signalingMessage.candidate!
                 webRTCClient.recieveCandidate(candidate: RTCIceCandidate(sdp: candidate.sdp, sdpMLineIndex: candidate.sdpMLineIndex, sdpMid: candidate.sdpMid))
@@ -218,10 +217,14 @@ extension ViewController {
     
     func webRTCDidConnected() {
         self.webRTCStatusLabel.textColor = .green
+        // MARK: Disconnect websocket
+        
     }
     
     func webRTCDidDisconnected() {
         self.webRTCStatusLabel.textColor = .red
+        // MRAK: Try to connect websocket
+        
     }
     
 }
