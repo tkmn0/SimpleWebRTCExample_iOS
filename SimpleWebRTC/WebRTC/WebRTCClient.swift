@@ -183,7 +183,9 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
     
     private func createVideoTrack() -> RTCVideoTrack {
         let videoSource = self.peerConnectionFactory.videoSource()
+        
         if TARGET_OS_SIMULATOR != 0 {
+            print("now runnnig on simulator...")
             self.videoCapturer = RTCFileVideoCapturer(delegate: videoSource)
         }
         else {
@@ -194,39 +196,47 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
     }
     
     func startCaptureLocalVideo(cameraPositon: AVCaptureDevice.Position, videoWidth: Int, videoHeight: Int?, videoFps: Int) {
-        guard let capturer = self.videoCapturer as? RTCCameraVideoCapturer else {
-            return
-        }
-        
-        var targetDevice: AVCaptureDevice?
-        var targetFormat: AVCaptureDevice.Format?
-        
-        // find target device
-        let devicies = RTCCameraVideoCapturer.captureDevices()
-        devicies.forEach { (device) in
-            if device.position ==  cameraPositon{
-                targetDevice = device
-            }
-        }
-        
-        // find target format
-        let formats = RTCCameraVideoCapturer.supportedFormats(for: targetDevice!)
-        formats.forEach { (format) in
-            for _ in format.videoSupportedFrameRateRanges {
-                let description = format.formatDescription as CMFormatDescription
-                let dimensions = CMVideoFormatDescriptionGetDimensions(description)
-                
-                if dimensions.width == videoWidth && dimensions.height == videoHeight ?? 0{
-                    targetFormat = format
-                } else if dimensions.width == videoWidth {
-                    targetFormat = format
+        if let capturer = self.videoCapturer as? RTCCameraVideoCapturer {
+            var targetDevice: AVCaptureDevice?
+            var targetFormat: AVCaptureDevice.Format?
+            
+            // find target device
+            let devicies = RTCCameraVideoCapturer.captureDevices()
+            devicies.forEach { (device) in
+                if device.position ==  cameraPositon{
+                    targetDevice = device
                 }
             }
+            
+            // find target format
+            let formats = RTCCameraVideoCapturer.supportedFormats(for: targetDevice!)
+            formats.forEach { (format) in
+                for _ in format.videoSupportedFrameRateRanges {
+                    let description = format.formatDescription as CMFormatDescription
+                    let dimensions = CMVideoFormatDescriptionGetDimensions(description)
+                    
+                    if dimensions.width == videoWidth && dimensions.height == videoHeight ?? 0{
+                        targetFormat = format
+                    } else if dimensions.width == videoWidth {
+                        targetFormat = format
+                    }
+                }
+            }
+            
+            capturer.startCapture(with: targetDevice!,
+                                  format: targetFormat!,
+                                  fps: videoFps)
+        } else if let capturer = self.videoCapturer as? RTCFileVideoCapturer{
+            print("setup file video capturer")
+            if let _ = Bundle.main.path( forResource: "sample.mp4", ofType: nil ) {
+                capturer.startCapturing(fromFileNamed: "sample.mp4") { (err) in
+                    print(err)
+                }
+            }else{
+                print("file did not faund")
+            }
+
         }
-        
-        capturer.startCapture(with: targetDevice!,
-                              format: targetFormat!,
-                              fps: videoFps)
     }
     
 }
@@ -240,7 +250,7 @@ extension WebRTCClient {
         }
         
         if stateChanged == .closed{
-             state = "closed"
+            state = "closed"
         }
         
         print("signaling state changed: ", state)
@@ -301,12 +311,34 @@ extension WebRTCClient {
 extension WebRTCClient{
     
     func videoView(_ videoView: RTCVideoRenderer, didChangeVideoSize size: CGSize) {
+        let isLandScape = size.width < size.height
+        
+        var renderView: RTCEAGLVideoView?
+        var parentView: UIView?
         if videoView.isEqual(localRenderView){
             print("local video size changed")
+            renderView = localRenderView
+            parentView = localView
         }
         
         if videoView.isEqual(remoteRenderView!){
             print("remote video size changed")
+            renderView = remoteRenderView
+            parentView = remoteView
+        }
+        
+        guard let _renderView = renderView, let _parentView = parentView else {
+            return
+        }
+        
+        if(isLandScape){
+            let ratio = _parentView.frame.height / size.height
+            _renderView.frame = CGRect(x: 0, y: 0, width: size.width * ratio, height: _parentView.frame.height)
+            _renderView.center.x = _parentView.frame.width/2
+        }else{
+            let ratio = _parentView.frame.width / size.width
+            _renderView.frame = CGRect(x: 0, y: 0, width: _parentView.frame.width, height: size.height * ratio)
+            _renderView.center.y = _parentView.frame.height/2
         }
     }
 }

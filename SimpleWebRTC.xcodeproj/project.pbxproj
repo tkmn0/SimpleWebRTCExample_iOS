@@ -22,6 +22,7 @@
 		AF711AC521DFAD6E005CA4FA /* SimpleWebRTCUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711AC421DFAD6E005CA4FA /* SimpleWebRTCUITests.swift */; };
 		AF711ADA21E1454E005CA4FA /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711AD921E1454E005CA4FA /* WebRTCClient.swift */; };
 		AF711ADD21E14DDC005CA4FA /* ScreenSizeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711ADC21E14DDC005CA4FA /* ScreenSizeUtil.swift */; };
+		AFB7E9B121E56D8B00A0E27A /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = AFF1031B21E569B60011C1FC /* sample.mp4 */; };
 		D71109860490E06B4DBEDA0A /* Pods_SimpleWebRTCUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D406393A74B9F1094684B202 /* Pods_SimpleWebRTCUITests.framework */; };
 		E7D51F26BCDF2A88B61DA706 /* Pods_SimpleWebRTCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31148F7848EBC2EEA7F21F0F /* Pods_SimpleWebRTCTests.framework */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		AF711AC621DFAD6E005CA4FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF711AD921E1454E005CA4FA /* WebRTCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		AF711ADC21E14DDC005CA4FA /* ScreenSizeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSizeUtil.swift; sourceTree = "<group>"; };
+		AFF1031B21E569B60011C1FC /* sample.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.mp4; sourceTree = "<group>"; };
 		D406393A74B9F1094684B202 /* Pods_SimpleWebRTCUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWebRTCUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F150849F443D0DC1BDD78D03 /* Pods-SimpleWebRTC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWebRTC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWebRTC/Pods-SimpleWebRTC.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +176,7 @@
 		AF711AA321DFAD6C005CA4FA /* SimpleWebRTC */ = {
 			isa = PBXGroup;
 			children = (
+				AFF1031921E569990011C1FC /* Assets */,
 				AF15C0B321E4F1B9005B4ED6 /* Data */,
 				AF15C0AE21E41A58005B4ED6 /* Extentions */,
 				AF711ADB21E14DC1005CA4FA /* Utility */,
@@ -228,6 +231,22 @@
 				AF711ADC21E14DDC005CA4FA /* ScreenSizeUtil.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		AFF1031921E569990011C1FC /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				AFF1031A21E569A20011C1FC /* Video */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		AFF1031A21E569A20011C1FC /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				AFF1031B21E569B60011C1FC /* sample.mp4 */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 		CC50A5E7064D862E716DA71D /* Frameworks */ = {
@@ -353,6 +372,7 @@
 				AF711AAF21DFAD6E005CA4FA /* LaunchScreen.storyboard in Resources */,
 				AF711AAC21DFAD6E005CA4FA /* Assets.xcassets in Resources */,
 				AF711AAA21DFAD6C005CA4FA /* Main.storyboard in Resources */,
+				AFB7E9B121E56D8B00A0E27A /* sample.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
