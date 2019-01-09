@@ -11,6 +11,9 @@ import WebRTC
 
 protocol WebRTCClientDelegate {
     func didGenerateCandidate(iceCandidate: RTCIceCandidate)
+    func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState)
+    func webRTCDidConnected()
+    func webRTCDidDisconnected()
 }
 
 class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
@@ -25,6 +28,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
     private var remoteView: UIView!
     private var remoteStream: RTCMediaStream?
     var delegate: WebRTCClientDelegate?
+    public private(set) var isConnected: Bool = false
     
     func localVideoView() -> UIView {
         return localView
@@ -235,7 +239,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate {
             }else{
                 print("file did not faund")
             }
-
+            
         }
     }
     
@@ -257,22 +261,27 @@ extension WebRTCClient {
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
-        if newState == .connected {
-            print("ice connection state is connected")
+        
+        switch newState {
+        case .connected, .completed:
+            if !self.isConnected {
+                DispatchQueue.main.async {
+                    self.delegate?.webRTCDidConnected()
+                }
+            }
+            self.isConnected = true
+        default:
+            if self.isConnected{
+                DispatchQueue.main.async {
+                    self.delegate?.webRTCDidDisconnected()
+                }
+            }
+            self.isConnected = false
         }
-        if newState == .completed {
-            print("ice completed")
+        
+        DispatchQueue.main.async {
+            self.delegate?.didIceConnectionStateChanged(iceConnectionState: newState)
         }
-        if newState == .failed {
-            print("ice failed")
-        }
-        if newState == .closed {
-            print("ice closed")
-        }
-    }
-    
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
-        print("ice gathering state changed: ", newState)
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
@@ -285,26 +294,19 @@ extension WebRTCClient {
         }
     }
     
-    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
-        print("did remove stream")
-    }
-    
     func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
         self.delegate?.didGenerateCandidate(iceCandidate: candidate)
     }
     
-    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {
-        
-    }
+    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {}
     
-    func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
-        
-    }
+    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {}
     
-    func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
-        print("peer connection should negotiate")
-    }
+    func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {}
     
+    func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {}
+    
+    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {}
 }
 
 // MARK: RTCVideoView Delegate

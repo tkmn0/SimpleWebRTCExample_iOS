@@ -17,7 +17,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
     
     let ipAddress: String = "192.168.11.4"
     var wsStatusLabel: UILabel!
-    let wsStatusMessageBase = "websocket: "
+    let wsStatusMessageBase = "WebSocket: "
     var webRTCStatusLabel: UILabel!
     let webRTCStatusMesasgeBase = "WebRTC: "
     
@@ -148,11 +148,18 @@ extension ViewController {
     func websocketDidConnect(socket: WebSocketClient) {
         print("-- websocket did connect --")
         wsStatusLabel.text = wsStatusMessageBase + "connected"
+        wsStatusLabel.textColor = .green
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("-- websocket did disconnect --")
         wsStatusLabel.text = wsStatusMessageBase + "disconnected"
+        wsStatusLabel.textColor = .red
+        
+        if !self.webRTCClient.isConnected {
+            // MARK: Retry to connect websocket
+            
+        }
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -176,9 +183,7 @@ extension ViewController {
         
     }
     
-    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        
-    }
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) { }
 }
 
 // MARK: - WebRTCClient Delegate
@@ -186,4 +191,37 @@ extension ViewController {
     func didGenerateCandidate(iceCandidate: RTCIceCandidate) {
         self.sendCandidate(iceCandidate: iceCandidate)
     }
+    
+    func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState) {
+        var state = ""
+        
+        switch iceConnectionState {
+        case .checking:
+            state = "checking..."
+        case .closed:
+            state = "closed"
+        case .completed:
+            state = "completed"
+        case .connected:
+            state = "connected"
+        case .count:
+            state = "count..."
+        case .disconnected:
+            state = "disconnected"
+        case .failed:
+            state = "failed"
+        case .new:
+            state = "new..."
+        }
+        self.webRTCStatusLabel.text = self.webRTCStatusMesasgeBase + state
+    }
+    
+    func webRTCDidConnected() {
+        self.webRTCStatusLabel.textColor = .green
+    }
+    
+    func webRTCDidDisconnected() {
+        self.webRTCStatusLabel.textColor = .red
+    }
+    
 }
