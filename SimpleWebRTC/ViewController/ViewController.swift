@@ -20,6 +20,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
     let wsStatusMessageBase = "WebSocket: "
     var webRTCStatusLabel: UILabel!
     let webRTCStatusMesasgeBase = "WebRTC: "
+    var tryToConnectWebSocket: Timer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +31,14 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
         
         socket = WebSocket(url: URL(string: "ws://" + ipAddress + ":8080/")!)
         socket.delegate = self
-        socket.connect()
         
+        tryToConnectWebSocket = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+            if self.webRTCClient.isConnected || self.socket.isConnected {
+                return
+            }
+            
+            self.socket.connect()
+        })
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -154,11 +161,6 @@ extension ViewController {
         print("-- websocket did disconnect --")
         wsStatusLabel.text = wsStatusMessageBase + "disconnected"
         wsStatusLabel.textColor = .red
-        
-        if !self.webRTCClient.isConnected {
-            // MARK: Retry to connect websocket
-            
-        }
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -218,13 +220,11 @@ extension ViewController {
     func webRTCDidConnected() {
         self.webRTCStatusLabel.textColor = .green
         // MARK: Disconnect websocket
-        
+        self.socket.disconnect()
     }
     
     func webRTCDidDisconnected() {
         self.webRTCStatusLabel.textColor = .red
-        // MRAK: Try to connect websocket
-        
     }
     
 }
