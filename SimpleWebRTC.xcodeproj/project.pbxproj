@@ -23,6 +23,9 @@
 		AF711ADA21E1454E005CA4FA /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711AD921E1454E005CA4FA /* WebRTCClient.swift */; };
 		AF711ADD21E14DDC005CA4FA /* ScreenSizeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711ADC21E14DDC005CA4FA /* ScreenSizeUtil.swift */; };
 		AFB7E9B121E56D8B00A0E27A /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = AFF1031B21E569B60011C1FC /* sample.mp4 */; };
+		AFBCD53121E8F52B00694C14 /* like_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = AFBCD53021E8F52B00694C14 /* like_filled.png */; };
+		AFBCD53421E8F55900694C14 /* UIDeviceExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */; };
+		AFBCD53621E8F63A00694C14 /* like_border.png in Resources */ = {isa = PBXBuildFile; fileRef = AFBCD53521E8F63A00694C14 /* like_border.png */; };
 		D71109860490E06B4DBEDA0A /* Pods_SimpleWebRTCUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D406393A74B9F1094684B202 /* Pods_SimpleWebRTCUITests.framework */; };
 		E7D51F26BCDF2A88B61DA706 /* Pods_SimpleWebRTCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31148F7848EBC2EEA7F21F0F /* Pods_SimpleWebRTCTests.framework */; };
 /* End PBXBuildFile section */
@@ -86,6 +89,9 @@
 		AF711AC621DFAD6E005CA4FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF711AD921E1454E005CA4FA /* WebRTCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		AF711ADC21E14DDC005CA4FA /* ScreenSizeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSizeUtil.swift; sourceTree = "<group>"; };
+		AFBCD53021E8F52B00694C14 /* like_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_filled.png; sourceTree = "<group>"; };
+		AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtention.swift; sourceTree = "<group>"; };
+		AFBCD53521E8F63A00694C14 /* like_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_border.png; sourceTree = "<group>"; };
 		AFF1031B21E569B60011C1FC /* sample.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.mp4; sourceTree = "<group>"; };
 		D406393A74B9F1094684B202 /* Pods_SimpleWebRTCUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWebRTCUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F150849F443D0DC1BDD78D03 /* Pods-SimpleWebRTC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWebRTC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWebRTC/Pods-SimpleWebRTC.debug.xcconfig"; sourceTree = "<group>"; };
@@ -137,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */,
+				AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -233,9 +240,19 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		AFBCD52F21E8F51600694C14 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				AFBCD53521E8F63A00694C14 /* like_border.png */,
+				AFBCD53021E8F52B00694C14 /* like_filled.png */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
 		AFF1031921E569990011C1FC /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				AFBCD52F21E8F51600694C14 /* Image */,
 				AFF1031A21E569A20011C1FC /* Video */,
 			);
 			path = Assets;
@@ -370,8 +387,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF711AAF21DFAD6E005CA4FA /* LaunchScreen.storyboard in Resources */,
+				AFBCD53121E8F52B00694C14 /* like_filled.png in Resources */,
 				AF711AAC21DFAD6E005CA4FA /* Assets.xcassets in Resources */,
 				AF711AAA21DFAD6C005CA4FA /* Main.storyboard in Resources */,
+				AFBCD53621E8F63A00694C14 /* like_border.png in Resources */,
 				AFB7E9B121E56D8B00A0E27A /* sample.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,6 +513,7 @@
 				AF711ADD21E14DDC005CA4FA /* ScreenSizeUtil.swift in Sources */,
 				AF711AA521DFAD6C005CA4FA /* AppDelegate.swift in Sources */,
 				AF15C0B521E4F1F7005B4ED6 /* SignalingMessage.swift in Sources */,
+				AFBCD53421E8F55900694C14 /* UIDeviceExtention.swift in Sources */,
 				AF711ADA21E1454E005CA4FA /* WebRTCClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
