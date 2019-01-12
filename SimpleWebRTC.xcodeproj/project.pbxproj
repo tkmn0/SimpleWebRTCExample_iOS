@@ -22,6 +22,7 @@
 		AF711AC521DFAD6E005CA4FA /* SimpleWebRTCUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711AC421DFAD6E005CA4FA /* SimpleWebRTCUITests.swift */; };
 		AF711ADA21E1454E005CA4FA /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711AD921E1454E005CA4FA /* WebRTCClient.swift */; };
 		AF711ADD21E14DDC005CA4FA /* ScreenSizeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF711ADC21E14DDC005CA4FA /* ScreenSizeUtil.swift */; };
+		AFAF58EA21EA0AD300609BB7 /* UIColorExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAF58E921EA0AD300609BB7 /* UIColorExtention.swift */; };
 		AFB7E9B121E56D8B00A0E27A /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = AFF1031B21E569B60011C1FC /* sample.mp4 */; };
 		AFBCD53121E8F52B00694C14 /* like_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = AFBCD53021E8F52B00694C14 /* like_filled.png */; };
 		AFBCD53421E8F55900694C14 /* UIDeviceExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */; };
@@ -89,6 +90,7 @@
 		AF711AC621DFAD6E005CA4FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF711AD921E1454E005CA4FA /* WebRTCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		AF711ADC21E14DDC005CA4FA /* ScreenSizeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSizeUtil.swift; sourceTree = "<group>"; };
+		AFAF58E921EA0AD300609BB7 /* UIColorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtention.swift; sourceTree = "<group>"; };
 		AFBCD53021E8F52B00694C14 /* like_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_filled.png; sourceTree = "<group>"; };
 		AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtention.swift; sourceTree = "<group>"; };
 		AFBCD53521E8F63A00694C14 /* like_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_border.png; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			children = (
 				AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */,
 				AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */,
+				AFAF58E921EA0AD300609BB7 /* UIColorExtention.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				AF15C0B521E4F1F7005B4ED6 /* SignalingMessage.swift in Sources */,
 				AFBCD53421E8F55900694C14 /* UIDeviceExtention.swift in Sources */,
 				AF711ADA21E1454E005CA4FA /* WebRTCClient.swift in Sources */,
+				AFAF58EA21EA0AD300609BB7 /* UIColorExtention.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

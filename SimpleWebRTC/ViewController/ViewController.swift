@@ -92,7 +92,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
         likeImageViewRect = CGRect(x: remoteVideoViewContainter.right - 70, y: likeButton.top - 70, width: 60, height: 60)
         
         let messageButton = UIButton(frame: CGRect(x: likeButton.left - 220, y: remoteVideoViewContainter.bottom - 50, width: 210, height: 40))
-        messageButton.backgroundColor = UIColor.green
+        messageButton.setBackgroundImage(UIColor.green.rectImage(width: messageButton.frame.width, height: messageButton.frame.height), for: .normal)
         messageButton.addTarget(self, action: #selector(self.sendMessageButtonTapped(_:)), for: .touchUpInside)
         messageButton.titleLabel?.adjustsFontSizeToFitWidth = true
         messageButton.setTitle(messageType.greet.text(), for: .normal)
@@ -115,7 +115,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
         let buttonHeight: CGFloat = 60
         let buttonRadius: CGFloat = 30
         let callButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight))
-        callButton.backgroundColor = .blue
+        callButton.setBackgroundImage(UIColor.blue.rectImage(width: callButton.frame.width, height: callButton.frame.height), for: .normal)
         callButton.layer.cornerRadius = buttonRadius
         callButton.layer.masksToBounds = true
         callButton.center.x = ScreenSizeUtil.width()/4
@@ -126,7 +126,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
         self.view.addSubview(callButton)
         
         let hangupButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight))
-        hangupButton.backgroundColor = .red
+        hangupButton.setBackgroundImage(UIColor.red.rectImage(width: hangupButton.frame.width, height: hangupButton.frame.height), for: .normal)
         hangupButton.layer.cornerRadius = buttonRadius
         hangupButton.layer.masksToBounds = true
         hangupButton.center.x = ScreenSizeUtil.width()/4 * 3
