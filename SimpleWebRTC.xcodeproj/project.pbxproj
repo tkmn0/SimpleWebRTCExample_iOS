@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		63BB1CC6E02B6443DA94C935 /* Pods_SimpleWebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFABE961561EF9B2240A098 /* Pods_SimpleWebRTC.framework */; };
-		AF15C0AC21E3FC3E005B4ED6 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF15C0AA21E3FC39005B4ED6 /* WebRTC.framework */; };
-		AF15C0AD21E3FC3E005B4ED6 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AF15C0AA21E3FC39005B4ED6 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF15C0B221E422D9005B4ED6 /* UIViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */; };
 		AF15C0B521E4F1F7005B4ED6 /* SignalingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF15C0B421E4F1F7005B4ED6 /* SignalingMessage.swift */; };
 		AF15C0B721E54EB1005B4ED6 /* SignalingCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF15C0B621E54EB1005B4ED6 /* SignalingCandidate.swift */; };
@@ -27,6 +25,8 @@
 		AFBCD53121E8F52B00694C14 /* like_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = AFBCD53021E8F52B00694C14 /* like_filled.png */; };
 		AFBCD53421E8F55900694C14 /* UIDeviceExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */; };
 		AFBCD53621E8F63A00694C14 /* like_border.png in Resources */ = {isa = PBXBuildFile; fileRef = AFBCD53521E8F63A00694C14 /* like_border.png */; };
+		AFC20E3F21EE999F002D67F0 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC20E3E21EE999F002D67F0 /* WebRTC.framework */; };
+		AFC20E4021EE999F002D67F0 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AFC20E3E21EE999F002D67F0 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D71109860490E06B4DBEDA0A /* Pods_SimpleWebRTCUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D406393A74B9F1094684B202 /* Pods_SimpleWebRTCUITests.framework */; };
 		E7D51F26BCDF2A88B61DA706 /* Pods_SimpleWebRTCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31148F7848EBC2EEA7F21F0F /* Pods_SimpleWebRTCTests.framework */; };
 /* End PBXBuildFile section */
@@ -49,13 +49,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AF711AD621DFAE33005CA4FA /* Embed Frameworks */ = {
+		AFC20E4121EE999F002D67F0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AF15C0AD21E3FC3E005B4ED6 /* WebRTC.framework in Embed Frameworks */,
+				AFC20E4021EE999F002D67F0 /* WebRTC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,7 +71,6 @@
 		8D9A48F6D592CC1505389F06 /* Pods-SimpleWebRTCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWebRTCTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWebRTCTests/Pods-SimpleWebRTCTests.release.xcconfig"; sourceTree = "<group>"; };
 		9BFABE961561EF9B2240A098 /* Pods_SimpleWebRTC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWebRTC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF15C0A821E3FC23005B4ED6 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = ../webrtc_build/src/out/ios/WebRTC.framework; sourceTree = "<group>"; };
-		AF15C0AA21E3FC39005B4ED6 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
 		AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtention.swift; sourceTree = "<group>"; };
 		AF15C0B421E4F1F7005B4ED6 /* SignalingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalingMessage.swift; sourceTree = "<group>"; };
 		AF15C0B621E54EB1005B4ED6 /* SignalingCandidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalingCandidate.swift; sourceTree = "<group>"; };
@@ -94,6 +93,7 @@
 		AFBCD53021E8F52B00694C14 /* like_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_filled.png; sourceTree = "<group>"; };
 		AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtention.swift; sourceTree = "<group>"; };
 		AFBCD53521E8F63A00694C14 /* like_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_border.png; sourceTree = "<group>"; };
+		AFC20E3E21EE999F002D67F0 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
 		AFF1031B21E569B60011C1FC /* sample.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.mp4; sourceTree = "<group>"; };
 		D406393A74B9F1094684B202 /* Pods_SimpleWebRTCUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWebRTCUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F150849F443D0DC1BDD78D03 /* Pods-SimpleWebRTC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWebRTC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWebRTC/Pods-SimpleWebRTC.debug.xcconfig"; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63BB1CC6E02B6443DA94C935 /* Pods_SimpleWebRTC.framework in Frameworks */,
-				AF15C0AC21E3FC3E005B4ED6 /* WebRTC.framework in Frameworks */,
+				AFC20E3F21EE999F002D67F0 /* WebRTC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +163,7 @@
 		AF711A9821DFAD6C005CA4FA = {
 			isa = PBXGroup;
 			children = (
-				AF15C0AA21E3FC39005B4ED6 /* WebRTC.framework */,
+				AFC20E3E21EE999F002D67F0 /* WebRTC.framework */,
 				AF711AA321DFAD6C005CA4FA /* SimpleWebRTC */,
 				AF711AB821DFAD6E005CA4FA /* SimpleWebRTCTests */,
 				AF711AC321DFAD6E005CA4FA /* SimpleWebRTCUITests */,
@@ -291,8 +291,8 @@
 				AF711A9D21DFAD6C005CA4FA /* Sources */,
 				AF711A9E21DFAD6C005CA4FA /* Frameworks */,
 				AF711A9F21DFAD6C005CA4FA /* Resources */,
-				AF711AD621DFAE33005CA4FA /* Embed Frameworks */,
 				D44822CD682FD4F64E8D30BA /* [CP] Embed Pods Frameworks */,
+				AFC20E4121EE999F002D67F0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

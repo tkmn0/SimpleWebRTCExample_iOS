@@ -41,8 +41,6 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
     var wsStatusLabel: UILabel!
     var webRTCStatusLabel: UILabel!
     var webRTCMessageLabel: UILabel!
-    
-    // Cache
     var likeImage: UIImage!
     var likeImageViewRect: CGRect!
     
