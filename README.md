@@ -14,7 +14,7 @@ This is simple WebRTC Exmaple project for iOS written in Swift.
 - Xcode version 10.1
 - Swift version 4.2.1
 - WebRTC framework
-- [StarScream](https://github.com/daltoniam/starscream) (for websocket)
+- [Starscream](https://github.com/daltoniam/starscream) (for websocket)
 
 # Setup
 - You need to add WebRTC.framework to your xcode project. see [how_to_add](https://github.com/tkmn0/SimpleWebRTCExample_iOS/blob/master/docs/how_to_add.md)
