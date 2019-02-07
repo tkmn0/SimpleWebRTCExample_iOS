@@ -220,7 +220,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
         let audioConstrains = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
         let audioSource = self.peerConnectionFactory.audioSource(with: audioConstrains)
         let audioTrack = self.peerConnectionFactory.audioTrack(with: audioSource, trackId: "audio0")
-        audioTrack.source.volume = 10.0
+        audioTrack.source.volume = 10
         return audioTrack
     }
     
@@ -403,6 +403,11 @@ extension WebRTCClient {
         if let track = stream.videoTracks.first {
             print("video track faund")
             track.add(remoteRenderView!)
+        }
+        
+        if let audioTrack = stream.audioTracks.first{
+            print("audio track faund")
+            audioTrack.source.volume = 8
         }
     }
     

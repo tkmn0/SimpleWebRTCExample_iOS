@@ -32,7 +32,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
     var tryToConnectWebSocket: Timer!
     
     // Constants
-    let ipAddress: String = "192.168.11.4"
+    let ipAddress: String = "192.168.1.36"
     let wsStatusMessageBase = "WebSocket: "
     let webRTCStatusMesasgeBase = "WebRTC: "
     let likeStr: String = "Like"
