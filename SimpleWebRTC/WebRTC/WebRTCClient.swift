@@ -33,6 +33,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
     private var remoteStream: RTCMediaStream?
     private var dataChannel: RTCDataChannel?
     private var channels: (video: Bool, audio: Bool, datachannel: Bool) = (false, false, false)
+    private var customFrameCapturer: Bool = false
     
     var delegate: WebRTCClientDelegate?
     public private(set) var isConnected: Bool = false
@@ -57,11 +58,12 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
     }
     
     // MARK: - Public functions
-    func setup(videoTrack: Bool, audioTrack: Bool, dataChannel: Bool){
+    func setup(videoTrack: Bool, audioTrack: Bool, dataChannel: Bool, customFrameCapturer: Bool){
         print("set up")
         self.channels.video = videoTrack
         self.channels.audio = audioTrack
         self.channels.datachannel = dataChannel
+        self.customFrameCapturer = customFrameCapturer
         
         let videoEncoderFactory = RTCDefaultVideoEncoderFactory()
         let videoDecoderFactory = RTCDefaultVideoDecoderFactory()
@@ -183,6 +185,12 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
         }
     }
     
+    func captureCurrentFrame(sampleBuffer: CMSampleBuffer){
+        if let capturer = self.videoCapturer as? RTCCustomFrameCapturer {
+            capturer.capture(sampleBuffer)
+        }
+    }
+    
     // MARK: - Private functions
     // MARK: - Setup
     private func setupPeerConnection() -> RTCPeerConnection{
@@ -227,7 +235,9 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
     private func createVideoTrack() -> RTCVideoTrack {
         let videoSource = self.peerConnectionFactory.videoSource()
         
-        if TARGET_OS_SIMULATOR != 0 {
+        if self.customFrameCapturer {
+            self.videoCapturer = RTCCustomFrameCapturer(delegate: videoSource)
+        }else if TARGET_OS_SIMULATOR != 0 {
             print("now runnnig on simulator...")
             self.videoCapturer = RTCFileVideoCapturer(delegate: videoSource)
         }

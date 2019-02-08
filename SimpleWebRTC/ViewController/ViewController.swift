@@ -11,7 +11,14 @@ import Starscream
 import WebRTC
 import UIKit
 
-class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate {
+class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate, CameraSessionDelegate {
+    
+    func didOutput(_ sampleBuffer: CMSampleBuffer) {
+        if self.useCustomCapturer {
+            self.webRTCClient.captureCurrentFrame(sampleBuffer: sampleBuffer)
+        }
+    }
+    
     
     enum messageType {
         case greet
@@ -30,9 +37,13 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
     var webRTCClient: WebRTCClient!
     var socket: WebSocket!
     var tryToConnectWebSocket: Timer!
+    var cameraSession: CameraSession?
+    
+    // You can create video source from CMSampleBuffer :)
+    var useCustomCapturer: Bool = false
     
     // Constants
-    let ipAddress: String = "192.168.1.36"
+    let ipAddress: String = "192.168.11.4"
     let wsStatusMessageBase = "WebSocket: "
     let webRTCStatusMesasgeBase = "WebRTC: "
     let likeStr: String = "Like"
@@ -49,7 +60,14 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate 
         
         webRTCClient = WebRTCClient()
         webRTCClient.delegate = self
-        webRTCClient.setup(videoTrack: true, audioTrack: true, dataChannel: true)
+        webRTCClient.setup(videoTrack: true, audioTrack: true, dataChannel: true, customFrameCapturer: useCustomCapturer)
+        
+        if useCustomCapturer {
+            print("--- use custom capturer ---")
+            self.cameraSession = CameraSession()
+            self.cameraSession?.delegate = self
+            self.cameraSession?.setupSession()
+        }
         
         socket = WebSocket(url: URL(string: "ws://" + ipAddress + ":8080/")!)
         socket.delegate = self

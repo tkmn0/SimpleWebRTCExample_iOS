@@ -1,0 +1,29 @@
+//
+//  RTCDataCapture.swift
+//  SimpleWebRTC
+//
+//  Created by tkmngch on 2019/02/08.
+//  Copyright © 2019 tkmngch. All rights reserved.
+//
+
+import Foundation
+import WebRTC
+
+class RTCCustomFrameCapturer: RTCVideoCapturer {
+    
+    let kNanosecondsPerSecond: Float64 = 1000000000
+    
+    override init(delegate: RTCVideoCapturerDelegate) {
+        super.init(delegate: delegate)
+    }
+    
+    public func capture(_ sampleBuffer: CMSampleBuffer){
+        let _pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
+        if let pixelBuffer = _pixelBuffer {
+            let rtcPixelBuffer = RTCCVPixelBuffer(pixelBuffer: pixelBuffer)
+            let timeStampNs = CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(sampleBuffer)) * kNanosecondsPerSecond
+            let rtcVideoFrame = RTCVideoFrame(buffer: rtcPixelBuffer, rotation: RTCVideoRotation._90, timeStampNs: Int64(timeStampNs))
+            self.delegate?.capturer(self, didCapture: rtcVideoFrame)
+        }
+    }
+}
