@@ -43,7 +43,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     var useCustomCapturer: Bool = false
     
     // Constants
-    let ipAddress: String = "192.168.11.4"
+    let ipAddress: String = "192.168.1.25"
     let wsStatusMessageBase = "WebSocket: "
     let webRTCStatusMesasgeBase = "WebRTC: "
     let likeStr: String = "Like"
@@ -60,7 +60,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
         
         webRTCClient = WebRTCClient()
         webRTCClient.delegate = self
-        webRTCClient.setup(videoTrack: true, audioTrack: true, dataChannel: true, customFrameCapturer: useCustomCapturer)
+        webRTCClient.setup(videoTrack: false, audioTrack: true, dataChannel: false, customFrameCapturer: useCustomCapturer)
         
         if useCustomCapturer {
             print("--- use custom capturer ---")

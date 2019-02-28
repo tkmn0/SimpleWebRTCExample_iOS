@@ -122,10 +122,10 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
             self.peerConnection = setupPeerConnection()
             self.peerConnection!.delegate = self
             if self.channels.video {
-                self.peerConnection!.add(localAudioTrack, streamIds: ["stream-0"])
+                self.peerConnection!.add(localVideoTrack, streamIds: ["stream-0"])
             }
             if self.channels.audio {
-                self.peerConnection!.add(localVideoTrack, streamIds: ["stream-0"])
+                self.peerConnection!.add(localAudioTrack, streamIds: ["stream-0"])
             }
             if self.channels.datachannel {
                 self.dataChannel = self.setupDataChannel()
@@ -228,7 +228,8 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
         let audioConstrains = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
         let audioSource = self.peerConnectionFactory.audioSource(with: audioConstrains)
         let audioTrack = self.peerConnectionFactory.audioTrack(with: audioSource, trackId: "audio0")
-        audioTrack.source.volume = 10
+        
+        // audioTrack.source.volume = 10
         return audioTrack
     }
     
