@@ -60,7 +60,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
         
         webRTCClient = WebRTCClient()
         webRTCClient.delegate = self
-        webRTCClient.setup(videoTrack: false, audioTrack: true, dataChannel: false, customFrameCapturer: useCustomCapturer)
+        webRTCClient.setup(videoTrack: true, audioTrack: true, dataChannel: true, customFrameCapturer: useCustomCapturer)
         
         if useCustomCapturer {
             print("--- use custom capturer ---")
