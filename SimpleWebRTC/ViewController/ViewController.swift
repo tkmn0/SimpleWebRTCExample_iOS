@@ -34,7 +34,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     var cameraSession: CameraSession?
     
     // You can create video source from CMSampleBuffer :)
-    var useCustomCapturer: Bool = false
+    var useCustomCapturer: Bool = true
     
     // Constants
     let ipAddress: String = "192.168.1.139"
@@ -52,6 +52,10 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     //MARK: - ViewController Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if targetEnvironment(simulator)
+        // simulator does not have camera
+        self.useCustomCapturer = false
+        #endif
         
         webRTCClient = WebRTCClient()
         webRTCClient.delegate = self
