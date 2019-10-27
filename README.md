@@ -11,8 +11,8 @@ This is simple WebRTC Exmaple project for iOS written in Swift.
 - Includes super simple signaling server written in node.js.
 
 # Dependency
-- Xcode version 10.1
-- Swift version 4.2.1
+- Xcode version 10.3
+- Swift version 5
 - WebRTC framework
 - [Starscream](https://github.com/daltoniam/starscream) (for websocket)
 
@@ -28,7 +28,7 @@ This is simple WebRTC Exmaple project for iOS written in Swift.
 - Firstly, run the signaling server as folows.
   - `cd SimpleWebRTCExample_iOS/SignalingServer`
   - `node server.js`
-  node.js server will start at 8000 port.
+  node.js server will start at 8080 port.
 - Then, run SinmpleWebRTC on your device or simulator. This example need totaly two devices(simulator & simulator is OK)
 - Check websocket connection state on your device. If it is connected, you can tap call button. WebRTC will be connected.
 - You can send like with like button. 
