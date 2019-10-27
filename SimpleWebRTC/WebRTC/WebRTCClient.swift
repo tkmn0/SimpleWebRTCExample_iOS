@@ -191,6 +191,12 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
         }
     }
     
+    func captureCurrentFrame(sampleBuffer: CVPixelBuffer){
+        if let capturer = self.videoCapturer as? RTCCustomFrameCapturer {
+            capturer.capture(sampleBuffer)
+        }
+    }
+    
     // MARK: - Private functions
     // MARK: - Setup
     private func setupPeerConnection() -> RTCPeerConnection{

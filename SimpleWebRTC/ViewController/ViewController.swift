@@ -35,6 +35,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     
     // You can create video source from CMSampleBuffer :)
     var useCustomCapturer: Bool = true
+    var cameraFilter: CameraFilter?
     
     // Constants
     let ipAddress: String = "192.168.1.139"
@@ -66,6 +67,8 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
             self.cameraSession = CameraSession()
             self.cameraSession?.delegate = self
             self.cameraSession?.setupSession()
+            
+            self.cameraFilter = CameraFilter()
         }
         
         socket = WebSocket(url: URL(string: "ws://" + ipAddress + ":8080/")!)
@@ -342,7 +345,16 @@ extension ViewController {
 extension ViewController {
     func didOutput(_ sampleBuffer: CMSampleBuffer) {
         if self.useCustomCapturer {
-            self.webRTCClient.captureCurrentFrame(sampleBuffer: sampleBuffer)
+            if let cvpixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer){
+                if let buffer = self.cameraFilter?.apply(cvpixelBuffer){
+                    self.webRTCClient.captureCurrentFrame(sampleBuffer: buffer)
+                }else{
+                    print("no applied image")
+                }
+            }else{
+                print("no pixelbuffer")
+            }
+            //            self.webRTCClient.captureCurrentFrame(sampleBuffer: buffer)
         }
     }
 }
