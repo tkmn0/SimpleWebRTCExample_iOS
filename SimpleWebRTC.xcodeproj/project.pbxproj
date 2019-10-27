@@ -382,12 +382,12 @@
 					};
 					AF711AB421DFAD6E005CA4FA = {
 						CreatedOnToolsVersion = 9.3.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1110;
 						TestTargetID = AF711AA021DFAD6C005CA4FA;
 					};
 					AF711ABF21DFAD6E005CA4FA = {
 						CreatedOnToolsVersion = 9.3.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1110;
 						TestTargetID = AF711AA021DFAD6C005CA4FA;
 					};
 				};
@@ -772,7 +772,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.SimpleWebRTCTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleWebRTC.app/SimpleWebRTC";
 			};
@@ -794,7 +794,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.SimpleWebRTCTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleWebRTC.app/SimpleWebRTC";
 			};
@@ -815,7 +815,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.SimpleWebRTCUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = SimpleWebRTC;
 			};
@@ -836,7 +836,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = test.SimpleWebRTCUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = SimpleWebRTC;
 			};
