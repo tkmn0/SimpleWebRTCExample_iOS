@@ -470,7 +470,7 @@ extension WebRTCClient{
         }
         
         if(isLandScape){
-            let ratio = size.width/size.height
+            let ratio = size.width / size.height
             _renderView.frame = CGRect(x: 0, y: 0, width: _parentView.frame.height * ratio, height: _parentView.frame.height)
             _renderView.center.x = _parentView.frame.width/2
         }else{

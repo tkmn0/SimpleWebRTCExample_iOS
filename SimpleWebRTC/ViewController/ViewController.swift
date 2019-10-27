@@ -107,7 +107,13 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
         let localVideoView = webRTCClient.localVideoView()
         webRTCClient.setupLocalViewFrame(frame: CGRect(x: 0, y: 0, width: ScreenSizeUtil.width()/3, height: ScreenSizeUtil.height()/3))
         localVideoView.center.y = self.view.center.y
+        localVideoView.subviews.last?.isUserInteractionEnabled = true
         self.view.addSubview(localVideoView)
+        
+        let localVideoViewButton = UIButton(frame: CGRect(x: 0, y: 0, width: localVideoView.frame.width, height: localVideoView.frame.height))
+        localVideoViewButton.backgroundColor = UIColor.clear
+        localVideoViewButton.addTarget(self, action: #selector(self.localVideoViewTapped(_:)), for: .touchUpInside)
+        localVideoView.addSubview(localVideoViewButton)
         
         let likeButton = UIButton(frame: CGRect(x: remoteVideoViewContainter.right - 50, y: remoteVideoViewContainter.bottom - 50, width: 40, height: 40))
         likeButton.backgroundColor = UIColor.clear
@@ -191,6 +197,13 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     @objc func likeButtonTapped(_ sender: UIButton){
         let data = likeStr.data(using: String.Encoding.utf8)
         webRTCClient.sendData(data: data!)
+        self.cameraFilter?.changeFilter((cameraFilter?.filterType.next())!)
+    }
+    
+    @objc func localVideoViewTapped(_ sender: UITapGestureRecognizer) {
+        if let filter = self.cameraFilter {
+            filter.changeFilter(filter.filterType.next())
+        }
     }
     
     private func startLikeAnimation(){
