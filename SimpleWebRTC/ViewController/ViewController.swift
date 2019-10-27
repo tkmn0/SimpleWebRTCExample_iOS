@@ -13,13 +13,6 @@ import UIKit
 
 class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate, CameraSessionDelegate {
     
-    func didOutput(_ sampleBuffer: CMSampleBuffer) {
-        if self.useCustomCapturer {
-            self.webRTCClient.captureCurrentFrame(sampleBuffer: sampleBuffer)
-        }
-    }
-    
-    
     enum messageType {
         case greet
         case introduce
@@ -317,7 +310,7 @@ extension ViewController {
     }
     
     func didDisconnectWebRTC() {
-         self.webRTCStatusLabel.textColor = .red
+        self.webRTCStatusLabel.textColor = .red
     }
     
     func didOpenDataChannel() {
@@ -332,5 +325,14 @@ extension ViewController {
     
     func didReceiveMessage(message: String) {
         self.webRTCMessageLabel.text = message
+    }
+}
+
+// Mark: - CameraSessionDelegate
+extension ViewController {
+    func didOutput(_ sampleBuffer: CMSampleBuffer) {
+        if self.useCustomCapturer {
+            self.webRTCClient.captureCurrentFrame(sampleBuffer: sampleBuffer)
+        }
     }
 }
