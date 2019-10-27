@@ -464,12 +464,12 @@ extension WebRTCClient{
         }
         
         if(isLandScape){
-            let ratio = _parentView.frame.height / size.height
-            _renderView.frame = CGRect(x: 0, y: 0, width: size.width * ratio, height: _parentView.frame.height)
+            let ratio = size.width/size.height
+            _renderView.frame = CGRect(x: 0, y: 0, width: _parentView.frame.height * ratio, height: _parentView.frame.height)
             _renderView.center.x = _parentView.frame.width/2
         }else{
-            let ratio = _parentView.frame.width / size.width
-            _renderView.frame = CGRect(x: 0, y: 0, width: _parentView.frame.width, height: size.height * ratio)
+            let ratio = size.height / size.width
+            _renderView.frame = CGRect(x: 0, y: 0, width: _parentView.frame.width, height: _parentView.frame.width * ratio)
             _renderView.center.y = _parentView.frame.height/2
         }
     }
