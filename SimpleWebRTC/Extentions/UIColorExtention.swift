@@ -2,8 +2,8 @@
 //  UIColorExtention.swift
 //  SimpleWebRTC
 //
-//  Created by tkmngch on 2019/01/12.
-//  Copyright © 2019 tkmngch. All rights reserved.
+//  Created by n0 on 2019/01/12.
+//  Copyright © 2019 n0. All rights reserved.
 //
 
 import Foundation

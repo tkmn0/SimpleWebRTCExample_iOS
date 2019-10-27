@@ -2,8 +2,8 @@
 //  CameraSession.swift
 //  SimpleWebRTC
 //
-//  Created by tkmngch on 2019/02/08.
-//  Copyright © 2019 tkmngch. All rights reserved.
+//  Created by n0 on 2019/02/08.
+//  Copyright © 2019 n0. All rights reserved.
 //
 
 import Foundation
