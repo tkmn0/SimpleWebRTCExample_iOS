@@ -43,7 +43,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     var useCustomCapturer: Bool = false
     
     // Constants
-    let ipAddress: String = "192.168.1.25"
+    let ipAddress: String = "192.168.1.139"
     let wsStatusMessageBase = "WebSocket: "
     let webRTCStatusMesasgeBase = "WebRTC: "
     let likeStr: String = "Like"

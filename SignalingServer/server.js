@@ -3,7 +3,8 @@
 let WebSocketServer = require('ws').Server;
 let port = 8080;
 let wsServer = new WebSocketServer({ port: port });
-console.log('websocket server start. port=' + port);
+const ip = require('ip');
+console.log('websocket server start.' + ' ipaddress = ' + ip.address() + ' port = ' + port);
 
 wsServer.on('connection', function (ws) {
     console.log('-- websocket connected --');
@@ -16,7 +17,7 @@ wsServer.on('connection', function (ws) {
             if (isSame(ws, client)) {
                 console.log('skip sender');
             }
-            else{
+            else {
                 client.send(message);
             }
         });
