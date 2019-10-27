@@ -27,6 +27,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
         }
     }
     
+    //MARK: - Properties
     var webRTCClient: WebRTCClient!
     var socket: WebSocket!
     var tryToConnectWebSocket: Timer!
@@ -48,6 +49,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     var likeImage: UIImage!
     var likeImageViewRect: CGRect!
     
+    //MARK: - ViewController Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,7 +78,16 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        self.setupUI()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - UI
+    private func setupUI(){
         let remoteVideoViewContainter = UIView(frame: CGRect(x: 0, y: 0, width: ScreenSizeUtil.width(), height: ScreenSizeUtil.height()*0.7))
         remoteVideoViewContainter.backgroundColor = .gray
         self.view.addSubview(remoteVideoViewContainter)
@@ -144,11 +155,6 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
         hangupButton.titleLabel?.font = UIFont.systemFont(ofSize: 22)
         hangupButton.addTarget(self, action: #selector(self.hangupButtonTapped(_:)), for: .touchUpInside)
         self.view.addSubview(hangupButton)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - UI Events
@@ -328,7 +334,7 @@ extension ViewController {
     }
 }
 
-// Mark: - CameraSessionDelegate
+// MARK: - CameraSessionDelegate
 extension ViewController {
     func didOutput(_ sampleBuffer: CMSampleBuffer) {
         if self.useCustomCapturer {
