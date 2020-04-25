@@ -197,7 +197,6 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     @objc func likeButtonTapped(_ sender: UIButton){
         let data = likeStr.data(using: String.Encoding.utf8)
         webRTCClient.sendData(data: data!)
-        self.cameraFilter?.changeFilter((cameraFilter?.filterType.next())!)
     }
     
     @objc func localVideoViewTapped(_ sender: UITapGestureRecognizer) {
