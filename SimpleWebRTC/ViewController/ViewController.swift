@@ -38,7 +38,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     var cameraFilter: CameraFilter?
     
     // Constants
-    let ipAddress: String = "192.168.1.139"
+    let ipAddress: String = "192.168.11.4"
     let wsStatusMessageBase = "WebSocket: "
     let webRTCStatusMesasgeBase = "WebRTC: "
     let likeStr: String = "Like"

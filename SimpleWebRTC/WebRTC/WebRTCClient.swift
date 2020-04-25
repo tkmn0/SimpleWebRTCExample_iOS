@@ -65,8 +65,14 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
         self.channels.datachannel = dataChannel
         self.customFrameCapturer = customFrameCapturer
         
-        let videoEncoderFactory = RTCDefaultVideoEncoderFactory()
-        let videoDecoderFactory = RTCDefaultVideoDecoderFactory()
+        var videoEncoderFactory = RTCDefaultVideoEncoderFactory()
+        var videoDecoderFactory = RTCDefaultVideoDecoderFactory()
+        
+        if TARGET_OS_SIMULATOR != 0 {
+            print("setup vp8 codec")
+            videoEncoderFactory = RTCSimluatorVideoEncoderFactory()
+            videoDecoderFactory = RTCSimulatorVideoDecoderFactory()
+        }
         self.peerConnectionFactory = RTCPeerConnectionFactory(encoderFactory: videoEncoderFactory, decoderFactory: videoDecoderFactory)
         
         setupView()
