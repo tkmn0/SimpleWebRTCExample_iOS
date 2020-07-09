@@ -10,6 +10,7 @@ This is simple WebRTC Exmaple project for iOS written in Swift.
 - Includes prebuild WebRTC.framework [here](https://github.com/tkmn0/SimpleWebRTCExample_iOS/releases). (This is for TEST ONLY.)
 - Datachannel implementation (text and bytes).
 - File Source implementation.
+- Camera position switching(tap local camera view.)
 - Includes super simple signaling server written in node.js.
 
 # Dependency
