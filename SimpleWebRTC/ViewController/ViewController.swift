@@ -34,12 +34,12 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     var cameraSession: CameraSession?
     
     // You can create video source from CMSampleBuffer :)
-    var useCustomCapturer: Bool = true
+    var useCustomCapturer: Bool = false
     var cameraFilter: CameraFilter?
     
     // Constants
     // MARK: Change this ip address in your case
-    let ipAddress: String = "192.168.11.4"
+    let ipAddress: String = "192.168.11.5"
     let wsStatusMessageBase = "WebSocket: "
     let webRTCStatusMesasgeBase = "WebRTC: "
     let likeStr: String = "Like"
@@ -201,9 +201,10 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     }
     
     @objc func localVideoViewTapped(_ sender: UITapGestureRecognizer) {
-        if let filter = self.cameraFilter {
-            filter.changeFilter(filter.filterType.next())
-        }
+//        if let filter = self.cameraFilter {
+//            filter.changeFilter(filter.filterType.next())
+//        }
+        webRTCClient.switchCameraPosition()
     }
     
     private func startLikeAnimation(){

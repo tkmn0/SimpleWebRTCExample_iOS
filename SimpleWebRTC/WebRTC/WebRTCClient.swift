@@ -20,7 +20,7 @@ protocol WebRTCClientDelegate {
 }
 
 class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, RTCDataChannelDelegate {
-
+    
     private var peerConnectionFactory: RTCPeerConnectionFactory!
     private var peerConnection: RTCPeerConnection?
     private var videoCapturer: RTCVideoCapturer!
@@ -34,6 +34,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
     private var dataChannel: RTCDataChannel?
     private var channels: (video: Bool, audio: Bool, datachannel: Bool) = (false, false, false)
     private var customFrameCapturer: Bool = false
+    private var cameraDevicePosition: AVCaptureDevice.Position = .front
     
     var delegate: WebRTCClientDelegate?
     public private(set) var isConnected: Bool = false
@@ -79,7 +80,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
         setupLocalTracks()
         
         if self.channels.video {
-            startCaptureLocalVideo(cameraPositon: .front, videoWidth: 640, videoHeight: 640*16/9, videoFps: 30)
+            startCaptureLocalVideo(cameraPositon: self.cameraDevicePosition, videoWidth: 640, videoHeight: 640*16/9, videoFps: 30)
             self.localVideoTrack?.add(self.localRenderView!)
         }
     }
@@ -92,6 +93,16 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
     func setupRemoteViewFrame(frame: CGRect){
         remoteView.frame = frame
         remoteRenderView?.frame = remoteView.frame
+    }
+    
+    func switchCameraPosition(){
+        if let capturer = self.videoCapturer as? RTCCameraVideoCapturer {
+            capturer.stopCapture {
+                let position = (self.cameraDevicePosition == .front) ? AVCaptureDevice.Position.back : AVCaptureDevice.Position.front
+                self.cameraDevicePosition = position
+                self.startCaptureLocalVideo(cameraPositon: position, videoWidth: 640, videoHeight: 640*16/9, videoFps: 30)
+            }
+        }
     }
     
     // MARK: Connect
