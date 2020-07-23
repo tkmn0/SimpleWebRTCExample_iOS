@@ -1,7 +1,7 @@
 ## How to add your WebRTC.framework to your xcode project
 
 You can get WebRTC.framework as flowing three ways. 
-1. You can download WebRTC.framework from [here](https://github.com/tkmn0/SimpleWebRTCExample_iOS/releases)
+1. ~~You can download WebRTC.framework from [here](https://github.com/tkmn0/SimpleWebRTCExample_iOS/releases)~~ THIS IS REMOVED. please build on your own.
 2. You can build official WebRTC.framework. see [how to build](https://github.com/tkmn0/SimpleWebRTCExample_iOS/blob/master/docs/BuildWebRTCFrameworkFlow.md)
 3. You can use cocoapods.
 
