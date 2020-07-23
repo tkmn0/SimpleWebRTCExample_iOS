@@ -21,8 +21,8 @@ This is simple WebRTC Exmaple project for iOS written in Swift.
 - [Starscream](https://github.com/daltoniam/starscream) (for websocket)
 
 # Setup
-If you want to build WebRTC.framework and use it, see below flow. Currently, this project uses GoogleWebRTC installed via pod.
-- You need to add WebRTC.framework to your xcode project. see [how_to_add](https://github.com/tkmn0/SimpleWebRTCExample_iOS/blob/master/docs/how_to_add.md)
+- ~~You need to add WebRTC.framework to your xcode project. see [how_to_add](https://github.com/tkmn0/SimpleWebRTCExample_iOS/blob/master/docs/how_to_add.md)~~ If you want to build WebRTC.framework and use it, see below flow. Currently, this project uses GoogleWebRTC installed via pod.
+- `pod install`
 - You need to setup signaling server.  
   This project includes simple one at `SimpleWebRTCExample_iOS/SignalingServer/`.  
   You can setup node.js as folows.
