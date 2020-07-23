@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		28D5CAE0E83A76C0FFBC9536 /* Pods_SimpleWebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BFABE961561EF9B2240A098 /* Pods_SimpleWebRTC.framework */; };
+		36CD22FCB349BCEE5358B5B3 /* Pods_SimpleWebRTCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857DBA40B100BBA4B1090AFA /* Pods_SimpleWebRTCTests.framework */; };
 		378B38D82365C2A8002C5E8B /* CameraFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B38D72365C2A8002C5E8B /* CameraFilter.swift */; };
+		58566E8A33710086B7EE8D4D /* Pods_SimpleWebRTCUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7D4A76AB86CEE4A5968070 /* Pods_SimpleWebRTCUITests.framework */; };
 		AF15C0B221E422D9005B4ED6 /* UIViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */; };
 		AF15C0B521E4F1F7005B4ED6 /* SignalingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF15C0B421E4F1F7005B4ED6 /* SignalingMessage.swift */; };
 		AF15C0B721E54EB1005B4ED6 /* SignalingCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF15C0B621E54EB1005B4ED6 /* SignalingCandidate.swift */; };
@@ -68,6 +70,7 @@
 		2D2A5F0229AE703BFD44F9F1 /* Pods-SimpleWebRTCUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWebRTCUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWebRTCUITests/Pods-SimpleWebRTCUITests.release.xcconfig"; sourceTree = "<group>"; };
 		378B38D72365C2A8002C5E8B /* CameraFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFilter.swift; sourceTree = "<group>"; };
 		53C8300D672FBC2658413CC6 /* Pods-SimpleWebRTC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWebRTC.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWebRTC/Pods-SimpleWebRTC.release.xcconfig"; sourceTree = "<group>"; };
+		857DBA40B100BBA4B1090AFA /* Pods_SimpleWebRTCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWebRTCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D9A48F6D592CC1505389F06 /* Pods-SimpleWebRTCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWebRTCTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWebRTCTests/Pods-SimpleWebRTCTests.release.xcconfig"; sourceTree = "<group>"; };
 		9BFABE961561EF9B2240A098 /* Pods_SimpleWebRTC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWebRTC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF15C0B121E422D9005B4ED6 /* UIViewExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtention.swift; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 		AFBCD53321E8F55900694C14 /* UIDeviceExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtention.swift; sourceTree = "<group>"; };
 		AFBCD53521E8F63A00694C14 /* like_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like_border.png; sourceTree = "<group>"; };
 		AFF1031B21E569B60011C1FC /* sample.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.mp4; sourceTree = "<group>"; };
+		CF7D4A76AB86CEE4A5968070 /* Pods_SimpleWebRTCUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleWebRTCUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F150849F443D0DC1BDD78D03 /* Pods-SimpleWebRTC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWebRTC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleWebRTC/Pods-SimpleWebRTC.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36CD22FCB349BCEE5358B5B3 /* Pods_SimpleWebRTCTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58566E8A33710086B7EE8D4D /* Pods_SimpleWebRTCUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +297,8 @@
 			isa = PBXGroup;
 			children = (
 				9BFABE961561EF9B2240A098 /* Pods_SimpleWebRTC.framework */,
+				857DBA40B100BBA4B1090AFA /* Pods_SimpleWebRTCTests.framework */,
+				CF7D4A76AB86CEE4A5968070 /* Pods_SimpleWebRTCUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
