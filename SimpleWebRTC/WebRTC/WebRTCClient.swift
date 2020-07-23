@@ -32,6 +32,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
     private var remoteView: UIView!
     private var remoteStream: RTCMediaStream?
     private var dataChannel: RTCDataChannel?
+    private var remoteDataChannel: RTCDataChannel?
     private var channels: (video: Bool, audio: Bool, datachannel: Bool) = (false, false, false)
     private var customFrameCapturer: Bool = false
     private var cameraDevicePosition: AVCaptureDevice.Position = .front
@@ -180,12 +181,11 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
     
     // MARK: DataChannel Event
     func sendMessge(message: String){
-        if let _dataChannel = self.dataChannel {
+        if let _dataChannel = self.remoteDataChannel {
             if _dataChannel.readyState == .open {
                 let buffer = RTCDataBuffer(data: message.data(using: String.Encoding.utf8)!, isBinary: false)
                 _dataChannel.sendData(buffer)
             }else {
-                
                 print("data channel is not ready state")
             }
         }else{
@@ -194,7 +194,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCVideoViewDelegate, R
     }
     
     func sendData(data: Data){
-        if let _dataChannel = self.dataChannel {
+        if let _dataChannel = self.remoteDataChannel {
             if _dataChannel.readyState == .open {
                 let buffer = RTCDataBuffer(data: data, isBinary: true)
                 _dataChannel.sendData(buffer)
@@ -454,6 +454,7 @@ extension WebRTCClient {
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
+        self.remoteDataChannel = dataChannel
         self.delegate?.didOpenDataChannel()
     }
     
@@ -512,5 +513,15 @@ extension WebRTCClient {
     
     func dataChannelDidChangeState(_ dataChannel: RTCDataChannel) {
         print("data channel did change state")
+        switch dataChannel.readyState {
+        case .closed:
+            print("closed")
+        case .closing:
+            print("closing")
+        case .connecting:
+            print("connecting")
+        case .open:
+            print("open")
+        }
     }
 }

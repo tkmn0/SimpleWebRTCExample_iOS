@@ -39,7 +39,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
     
     // Constants
     // MARK: Change this ip address in your case
-    let ipAddress: String = "192.168.11.5"
+    let ipAddress: String = "192.168.1.189"
     let wsStatusMessageBase = "WebSocket: "
     let webRTCStatusMesasgeBase = "WebRTC: "
     let likeStr: String = "Like"
@@ -143,6 +143,7 @@ class ViewController: UIViewController, WebSocketDelegate, WebRTCClientDelegate,
         self.view.addSubview(webRTCStatusLabel)
         webRTCMessageLabel = UILabel(frame: CGRect(x: 0, y: webRTCStatusLabel.bottom, width: ScreenSizeUtil.width(), height: 30))
         webRTCMessageLabel.textAlignment = .center
+        webRTCMessageLabel.textColor = .black
         self.view.addSubview(webRTCMessageLabel)
         
         let buttonWidth = ScreenSizeUtil.width()*0.4
