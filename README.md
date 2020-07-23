@@ -7,7 +7,7 @@ This is simple WebRTC Exmaple project for iOS written in Swift.
 
 - Super simple WebRTC example project written in Swift.
 - Example command lines to build WebRTC.framework.[here](https://github.com/tkmn0/SimpleWebRTCExample_iOS/blob/master/docs/BuildWebRTCFrameworkFlow.md)
-- Includes prebuild WebRTC.framework [here](https://github.com/tkmn0/SimpleWebRTCExample_iOS/releases). (This is for TEST ONLY.)
+- ~~Includes prebuild WebRTC.framework [here](https://github.com/tkmn0/SimpleWebRTCExample_iOS/releases). (This is for TEST ONLY.)~~ THIS IS REMOVED.
 - Datachannel implementation (text and bytes).
 - File Source implementation.
 - Camera position switching(tap local camera view.)
@@ -17,11 +17,11 @@ This is simple WebRTC Exmaple project for iOS written in Swift.
 
 - Xcode version 10.3
 - Swift version 5
-- WebRTC framework
+- [GoogleWebRTC](https://cocoapods.org/pods/GoogleWebRTC)
 - [Starscream](https://github.com/daltoniam/starscream) (for websocket)
 
 # Setup
-
+If you want to build WebRTC.framework and use it, see below flow. Currently, this project uses GoogleWebRTC installed via pod.
 - You need to add WebRTC.framework to your xcode project. see [how_to_add](https://github.com/tkmn0/SimpleWebRTCExample_iOS/blob/master/docs/how_to_add.md)
 - You need to setup signaling server.  
   This project includes simple one at `SimpleWebRTCExample_iOS/SignalingServer/`.  
