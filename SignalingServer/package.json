@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "ip": "^1.1.5",
-    "ws": "^6.1.2"
+    "ws": "^7.4.6"
   }
 }
